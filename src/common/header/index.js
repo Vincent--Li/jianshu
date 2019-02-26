@@ -7,10 +7,23 @@ import {
   NavItem, 
   NavSearch,
   Addition,
-  Button
+  Button,
+  SearchWrapper
  } from './style';
 
 class Header extends Component {
+
+  constructor(props){
+    super(props);
+
+    this.state = {
+      focused: false
+    }
+    
+    this.handInputFocus = this.handInputFocus.bind(this);
+    this.handInputBlur = this.handInputBlur.bind(this);
+  }
+
   render(){
     return (
       <HeaderWrapper>
@@ -20,10 +33,22 @@ class Header extends Component {
           <NavItem className='left'>下载App</NavItem>
           <NavItem className='right'>登录</NavItem>
           <NavItem className='right'><i className='iconfont'>&#xe636;</i></NavItem>
-          <CSSTransition>
-            <NavSearch></NavSearch>
-          </CSSTransition>
-          <i className="iconfont">&#xe617;</i>
+          <SearchWrapper>
+            <CSSTransition
+              in={this.state.focused}
+              timeout={200}
+              classNames="slide"
+            >
+              <NavSearch
+                className = { this.state.focused ? 'focused': ''}
+                onFocus={this.handInputFocus}
+                onBlur={this.handInputBlur}
+              ></NavSearch>
+            </CSSTransition>
+
+            <i className = { this.state.focused ? 'focused iconfont' : 'iconfont'}
+          >&#xe617;</i>
+          </SearchWrapper>
         </Nav>
         <Addition>
           <Button className='writting'>
@@ -35,6 +60,18 @@ class Header extends Component {
       </HeaderWrapper>
       
     )
+  }
+
+  handInputFocus(){
+    this.setState({
+      focused: true
+    });
+  }
+
+  handInputBlur(){
+    this.setState({
+      focused: false
+    });
   }
 }
 

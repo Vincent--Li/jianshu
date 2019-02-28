@@ -59,23 +59,35 @@ import {
 
     }
 
-    getListArea = (show) => {
-      const { focused, list} = this.props;
-      if(focused){
+    getListArea = () => {
+      const { focused, list, page, mouseIn, totalPage, handChangePage, handMouseEnter, handMouseLeave} = this.props;
+      const pageList = [];
+      const newList = list.toJS();
+
+      if(newList.length) {
+        for( let i = ((page-1) * 10); i< page * 10  ; i++){
+          pageList.push(
+            <SearchInfoItem key={newList[i]}>{newList[i]}</SearchInfoItem>
+          )
+        }
+      }
+      
+      if(focused || mouseIn){
         return (
-          <SearchInfo>
+          <SearchInfo 
+            onMouseEnter={handMouseEnter}
+            onMouseLeave={handMouseLeave}
+          >
                 <SearchInfoTitle>
                   热门搜索
-                  <SearchInfoSwitch>
-                    换一换
+                  <SearchInfoSwitch
+                    onClick={() => handChangePage(page, totalPage)}
+                  >
+                    换一批
                   </SearchInfoSwitch>
                 </SearchInfoTitle>
                 <SearchInfoList>
-                  {
-                    list.map((item)=>{
-                      return <SearchInfoItem key={item}>{item}</SearchInfoItem>
-                    })
-                  }
+                  {pageList}
                 </SearchInfoList>
               </SearchInfo>
         )
@@ -91,7 +103,10 @@ import {
 const mapStateToProps = (state) => {
   return {
     focused: state.get('header').get('focused'),
-    list: state.get('header').get('list')
+    list: state.get('header').get('list'),
+    page: state.get('header').get('page'),
+    mouseIn: state.get('header').get('mouseIn'),
+    totalPage: state.get('header').get('totalPage')
   }
 }
 
@@ -103,6 +118,19 @@ const mapDispatchToProps = (dispatch) => {
       },
       handInputBlur: () => {
         dispatch(actionCreators.searchBlur());
+      },
+      handMouseEnter: () =>{
+        dispatch(actionCreators.mouseEnter());
+      },
+      handMouseLeave: () =>{
+        dispatch(actionCreators.mouseLeave());
+      },
+      handChangePage: (page, totalPage) => {
+        if(page < totalPage){
+          dispatch(actionCreators.changePage(page + 1));
+        }else{
+          dispatch(actionCreators.changePage(1));
+        }
       }
   }
 }

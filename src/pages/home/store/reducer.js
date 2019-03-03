@@ -10,7 +10,8 @@ const defaultState = fromJS({
     ],
     recommendList: [
     
-    ]
+    ],
+    articlePage: 1
 })
 
 export default (state = defaultState, action ) => {
@@ -21,6 +22,15 @@ export default (state = defaultState, action ) => {
             recommendList: fromJS(action.recommendList)
         })
     }
+
+    if(action.type === constants.ADD_ARTICLE_LIST){
+        return state.merge({
+            articleList: state.get('articleList').concat(action.list),
+            articlePage: action.nextPage
+        });
+    }
+
+    
 
     return state;
 }

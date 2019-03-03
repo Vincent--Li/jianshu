@@ -43,7 +43,5 @@ export default (state = defaultState, action ) => {
         return state.set('showScroll', action.show);
     }
 
-    
-
     return state;
 }

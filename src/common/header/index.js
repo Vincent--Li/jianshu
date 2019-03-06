@@ -64,10 +64,12 @@ import {
           </SearchWrapper>
         </Nav>
         <Addition>
-          <Button className='writting'>
-            <i className='iconfont spin'>&#xe601;</i>
-            写文章
-          </Button>
+          <Link to='/write'>
+            <Button className='writting'>
+              <i className='iconfont spin'>&#xe601;</i>
+              写文章
+            </Button>
+          </Link>
           <Button className='reg'>注册</Button>
         </Addition>
       </HeaderWrapper>

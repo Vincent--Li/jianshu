@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
+import { withRouter} from 'react-router-dom';
 import { actionCreators } from './store';
 import {
     DetailWrapper, Header,Content
@@ -33,4 +34,4 @@ const mapToDispatch = (dispatch) => ({
     }
 });
 
-export default connect(mapToState, mapToDispatch)(Detail);
+export default connect(mapToState, mapToDispatch)(withRouter(Detail));

@@ -25,7 +25,7 @@ class Detail extends PureComponent {
 const mapToState = (state) => ({
     title: state.getIn(['detail', 'title']),
     content: state.getIn(['detail', 'content'])
-})
+});
 
 const mapToDispatch = (dispatch) => ({
     getDetail (id){
